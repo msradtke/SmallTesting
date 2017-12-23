@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SmallTesting
+namespace SmallTesting.WpfTesting
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ClickToEditView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ClickToEditView : UserControl
     {
-        public MainWindow()
+        public ClickToEditView()
         {
             InitializeComponent();
         }

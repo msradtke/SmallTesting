@@ -12,8 +12,13 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <wpfTest:EditableTextBlock TextBlockBackgroundColor="White" TextBlockForegroundColor="Black" TextBoxBackgroundColor="White" TextBoxForegroundColor="Black"/>
 
+        <Grid>
+            <wpfTest:EditableTextBlock TextBlockBackgroundColor="White" TextBlockForegroundColor="Black" TextBoxBackgroundColor="White" TextBoxForegroundColor="Black"/>
+        </Grid>
         <TextBox Grid.Row="1"/>
+
+        <Grid Grid.Row="2">
+        </Grid>
     </Grid>
 </UserControl>

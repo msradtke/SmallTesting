@@ -61,10 +61,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ActionCommand.cs" />
+    <Compile Include="ListTesting\GroupTestView.xaml.cs">
+      <DependentUpon>GroupTestView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindowView.xaml.cs">
       <DependentUpon>MainWindowView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindowVm.cs" />
+    <Compile Include="ListTesting\GroupTestVm.cs" />
     <Compile Include="WpfTesting\ClickToEditView.xaml.cs">
       <DependentUpon>ClickToEditView.xaml</DependentUpon>
     </Compile>
@@ -73,6 +77,10 @@
     <Compile Include="WpfTesting\UserControl1.xaml.cs">
       <DependentUpon>UserControl1.xaml</DependentUpon>
     </Compile>
+    <Page Include="ListTesting\GroupTestView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Startup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

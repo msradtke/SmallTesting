@@ -1,4 +1,5 @@
-﻿using SmallTesting.WpfTesting;
+﻿using SmallTesting.ListTesting;
+using SmallTesting.WpfTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace SmallTesting
     {
         public MainWindowVm()
         {
-            CurrentViewModel = new ClickToEditVm();
+            CurrentViewModel = new GroupTestVm();
         }
         public object CurrentViewModel { get; set; }
     }

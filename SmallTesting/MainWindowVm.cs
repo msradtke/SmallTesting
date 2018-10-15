@@ -1,5 +1,6 @@
 ﻿using SmallTesting.ListTesting;
 using SmallTesting.WpfTesting;
+using SmallTesting.XmlSerialize;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace SmallTesting
     {
         public MainWindowVm()
         {
-            CurrentViewModel = new GroupTestVm();
+            CurrentViewModel = new SeralizeTestVm();
         }
         public object CurrentViewModel { get; set; }
     }

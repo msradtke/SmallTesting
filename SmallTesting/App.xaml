@@ -4,8 +4,12 @@
              xmlns:local="clr-namespace:SmallTesting"
              xmlns:wpfTest="clr-namespace:SmallTesting.WpfTesting"
              xmlns:listTest="clr-namespace:SmallTesting.ListTesting"
+             xmlns:serializeTest="clr-namespace:SmallTesting.XmlSerialize"
              StartupUri="Startup.xaml">
     <Application.Resources>
+        <DataTemplate DataType="{x:Type serializeTest:SeralizeTestVm}">
+            <serializeTest:SerializeTestView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type listTest:GroupTestVm}">
             <listTest:GroupTestView/>
         </DataTemplate>

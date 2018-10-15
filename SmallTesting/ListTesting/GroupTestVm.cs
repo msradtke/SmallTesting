@@ -10,7 +10,7 @@ namespace SmallTesting.ListTesting
     {
         public GroupTestVm()
         {
-            CreateData();
+            //CreateData();
         }
 
         public List<Part> Parts { get; set; }
@@ -18,8 +18,20 @@ namespace SmallTesting.ListTesting
         {
             var partTypes = Parts.GroupBy(x => x.Type).SelectMany(x => x.ToList()).Where(x => x.Name == "Grooved board");
 
-            var groovedBoards = partTypes.Select(x => x.Select(z => z.Name == "Grooved Board").ToList()).ToList();
+            //var groovedBoards = partTypes.Select(x => x.Select(z => z.Name == "Grooved Board").ToList()).ToList();
         }
+        void group(List<Predicate<Part>> groupFilters, List<Part> parts)
+        {
+            foreach (var filter in groupFilters)
+            {
+                foreach (var part in parts)
+                {
+
+                }
+            }
+        }
+
+
         void CreateData()
         {
             Parts = new List<Part>
@@ -43,4 +55,5 @@ public class Part
     public int Length { get; set; }
     public string Type { get; set; }
 }
-}
+
+

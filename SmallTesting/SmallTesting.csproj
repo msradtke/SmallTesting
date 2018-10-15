@@ -77,6 +77,10 @@
     <Compile Include="WpfTesting\UserControl1.xaml.cs">
       <DependentUpon>UserControl1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="XmlSerialize\SeralizeTestVm.cs" />
+    <Compile Include="XmlSerialize\SerializeTestView.xaml.cs">
+      <DependentUpon>SerializeTestView.xaml</DependentUpon>
+    </Compile>
     <Page Include="ListTesting\GroupTestView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -106,6 +110,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WpfTesting\UserControl1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XmlSerialize\SerializeTestView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

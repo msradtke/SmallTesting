@@ -9,7 +9,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Text="{Binding Xml,UpdateSourceTrigger=PropertyChanged}" Grid.RowSpan="1" TextWrapping="Wrap"/>
@@ -20,6 +21,16 @@
         </StackPanel>
         <WrapPanel Grid.Row="2">
             <ComboBox Width="100" ItemsSource="{Binding GroupObjects}" DisplayMemberPath="Name" SelectedIndex="{Binding TEST,FallbackValue=0}"/>
+        </WrapPanel>
+
+        <WrapPanel Grid.Row="3">
+            <ListView ItemsSource="{Binding GroupedParts}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ListView ItemsSource="{Binding Items}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </WrapPanel>
     </Grid>
 </UserControl>

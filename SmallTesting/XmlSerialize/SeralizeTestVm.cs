@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -13,9 +14,11 @@ namespace SmallTesting.XmlSerialize
     {
         public SeralizeTestVm()
         {
+            GroupCommand = new ActionCommand(GroupParts);
             CreateData();
             SetGroupObjects();
         }
+        public ICommand GroupCommand { get; set; }
         void CreateData()
         {
             var stringList1 = new List<int> { 1, 2, 3 };
@@ -76,6 +79,15 @@ namespace SmallTesting.XmlSerialize
                 new Part { Name = "",Length = 27,Type = "2x8"},
                 new Part { Name = "",Length = 96,Type = "6x8"}
             };
+             
+        }
+
+        void GroupParts()
+        {
+            var itemGroup = new ItemGroup<Part>();
+            itemGroup.Items = Parts;
+
+            GroupedParts = GroupRootObject.Group(new List<ItemGroup<Part>> { itemGroup });
 
         }
 
@@ -89,6 +101,8 @@ namespace SmallTesting.XmlSerialize
         public List<GroupObject<Part>> GroupObjects { get; set; }
         public bool SameString { get; set; }
         public List<Part> Parts { get; set; }
+        public List<ItemGroup<Part>> GroupedParts { get; set; }
+
     }
     public class GroupObject<T>
     {
@@ -137,6 +151,10 @@ namespace SmallTesting.XmlSerialize
     public class FilterObject<T>
     {
         public string Name { get; set; }
+        public virtual List<ItemGroup<T>> Filter(List<ItemGroup<T>> itemGroups)
+        {
+            return null;
+        }
         //public Func<List<object>, List<object>> Filter { get; set; }
     }
 
@@ -154,7 +172,65 @@ namespace SmallTesting.XmlSerialize
         public PartPropertyFilterObject()
         {
             Name = "Part Property";
+            PropertyNames = new List<string> { "Part Type", "Part Name" };
+
         }
+
+        public List<string> PropertyNames { get; set; }
+        public string Value { get; set; }
+        public string PropertyName { get; set; }
+        
+        public override List<ItemGroup<Part>> Filter(List<ItemGroup<Part>> itemGroups)
+        {
+            switch (PropertyName)
+            {
+                case "Part Type":
+                    return FilterByPartType(itemGroups);
+                case "Part Name":
+                    return FilterByPartName(itemGroups);
+                default:
+                    return new List<ItemGroup<Part>>(); 
+            }
+        }
+
+        List<ItemGroup<Part>> FilterByPartType(List<ItemGroup<Part>> itemGroups)
+        {
+            var newItemGroups = new List<ItemGroup<Part>>();
+
+            foreach (var itemGroup in itemGroups)
+            {
+                var newGroup = new ItemGroup<Part>();
+                newGroup.Items = new List<Part>();
+                foreach (var item in itemGroup.Items)
+                {
+                    if (item.Type == Value)
+                        newGroup.Items.Add(item);
+                }
+                newItemGroups.Add(newGroup);
+            }
+            return newItemGroups;
+        }
+
+        List<ItemGroup<Part>> FilterByPartName(List<ItemGroup<Part>> itemGroups)
+        {
+            var newItemGroups = new List<ItemGroup<Part>>();
+
+            foreach (var itemGroup in itemGroups)
+            {
+                var newGroup = new ItemGroup<Part>();
+                newGroup.Items = new List<Part>();
+                foreach (var item in itemGroup.Items)
+                {
+                    if (item.Name == Value)
+                        newGroup.Items.Add(item);
+                }
+                newItemGroups.Add(newGroup);
+            }
+            return newItemGroups;
+        }
+
+
+
     }
 
     public class PartGroupObject : GroupObject<Part>
@@ -171,23 +247,22 @@ namespace SmallTesting.XmlSerialize
         {
             Name = "Part Type";
         }
+
         public override List<ItemGroup<Part>> Group(List<ItemGroup<Part>> itemGroups, int index = 0)
         {
-            Dictionary<string, ItemGroup<Part>> PartTypeItemGroup = new Dictionary<string, ItemGroup<Part>>();
 
             foreach (var itemGroup in itemGroups)
             {
-                var allPartTypeGroups = new List<string>();
+                var newItemGroup = new ItemGroup<Part>();
 
                 foreach (var part in itemGroup.Items)
                 {
-                    var groupObject = PartTypeItemGroup[part.Type];
                     if (groupObject != null)
                         groupObject.Items.Add(part);
                 }
             }
-        }
 
+        }
     }
 
     public class AttributeGroupObject : GroupObject<Part>

@@ -7,6 +7,21 @@
              xmlns:serializeTest="clr-namespace:SmallTesting.XmlSerialize"
              StartupUri="Startup.xaml">
     <Application.Resources>
+        <DataTemplate DataType="{x:Type serializeTest:PartAttributeFilterVm}">
+            <serializeTest:PartAttributeFilterView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type serializeTest:CreatePartFilterViewModel}">
+            <serializeTest:CreatePartFilterView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type serializeTest:PartPropertyFilterVm}">
+            <serializeTest:PartPropertyFilterView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type serializeTest:CreatePartGroupVm}">
+            <serializeTest:CreatePartGroupView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type serializeTest:GroupObjectViewModel}">
+            <serializeTest:GroupObjectView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type serializeTest:SeralizeTestVm}">
             <serializeTest:SerializeTestView/>
         </DataTemplate>

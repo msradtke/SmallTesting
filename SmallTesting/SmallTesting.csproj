@@ -41,6 +41,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,6 +63,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ActionCommand.cs" />
+    <Compile Include="BaseViewModel.cs" />
     <Compile Include="ListTesting\GroupTestView.xaml.cs">
       <DependentUpon>GroupTestView.xaml</DependentUpon>
     </Compile>
@@ -76,6 +79,23 @@
     <Compile Include="WpfTesting\EditableTextBlock.cs" />
     <Compile Include="WpfTesting\UserControl1.xaml.cs">
       <DependentUpon>UserControl1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="XmlSerialize\CreatePartFilterView.xaml.cs">
+      <DependentUpon>CreatePartFilterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="XmlSerialize\CreatePartFilterViewModel.cs" />
+    <Compile Include="XmlSerialize\CreatePartGroupView.xaml.cs">
+      <DependentUpon>CreatePartGroupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="XmlSerialize\CreatePartGroupVm.cs" />
+    <Compile Include="XmlSerialize\GroupObjectView.xaml.cs">
+      <DependentUpon>GroupObjectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="XmlSerialize\PartAttributeFilterView.xaml.cs">
+      <DependentUpon>PartAttributeFilterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="XmlSerialize\PartPropertyFilterView.xaml.cs">
+      <DependentUpon>PartPropertyFilterView.xaml</DependentUpon>
     </Compile>
     <Compile Include="XmlSerialize\SeralizeTestVm.cs" />
     <Compile Include="XmlSerialize\SerializeTestView.xaml.cs">
@@ -110,6 +130,26 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WpfTesting\UserControl1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XmlSerialize\CreatePartFilterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XmlSerialize\CreatePartGroupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XmlSerialize\GroupObjectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XmlSerialize\PartAttributeFilterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XmlSerialize\PartPropertyFilterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

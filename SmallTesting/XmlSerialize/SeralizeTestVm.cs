@@ -19,8 +19,30 @@ namespace SmallTesting.XmlSerialize
             SetGroupObjects();
             CreatePartData();
             GroupParts();
+
+            CreatePartGroupVm = new CreatePartGroupVm(GetPartGroupObjects(), GetPartFilterObjects());
         }
         public ICommand GroupCommand { get; set; }
+        public object CreatePartGroupVm { get; set; }
+        List<GroupObject<Part>> GetPartGroupObjects()
+        {
+            return new List<GroupObject<Part>>
+            {
+                new PartNameGroupObject(),
+                new PartTypeGroupObject(),
+                new PartFilterGroupObject(),
+            };
+        }
+
+        List<FilterObject<Part>> GetPartFilterObjects()
+        {
+            return new List<FilterObject<Part>>
+            {
+                new PartAttributeFilterObject(),
+                new PartPropertyFilterObject(),
+            };
+        }
+
         void CreateData()
         {
             var stringList1 = new List<int> { 1, 2, 3 };
@@ -98,7 +120,7 @@ namespace SmallTesting.XmlSerialize
 
             GroupedParts = GroupObject<Part>.CreateGroupItems(Parts);
             GroupRootObject.Group(GroupedParts);
-            }
+        }
         void GetGroupObjectsFromXml()
         {
 
@@ -110,7 +132,7 @@ namespace SmallTesting.XmlSerialize
         public List<Part> Parts { get; set; }
         public List<GroupItem<Part>> GroupedParts { get; set; }
     }
-    public class GroupObject<T>
+    public abstract class GroupObject<T>
     {
         public GroupObject()
         {
@@ -118,6 +140,9 @@ namespace SmallTesting.XmlSerialize
             FilterObjects = new List<FilterObject<T>>();
         }
         //public List<GroupItem<T>> GroupItems { get; set; }
+
+        public abstract object GetViewModel();
+        public abstract GroupObject<T> Create();
 
         public int Id { get; set; }
         public List<FilterObject<T>> FilterObjects { get; set; }
@@ -147,6 +172,8 @@ namespace SmallTesting.XmlSerialize
 
             return groupItems;
         }
+
+
         //public Func<List<object>, List<object>> Group { get; set; }
     }
     public class ItemGroup<T>
@@ -168,8 +195,10 @@ namespace SmallTesting.XmlSerialize
         public T Item { get; set; }
         public List<string> GroupNames { get; set; }
     }
-    public class FilterObject<T>
+    public abstract class FilterObject<T>
     {
+        public abstract object GetViewModel();
+        public abstract FilterObject<T> Create();
         public string Name { get; set; }
         public virtual List<GroupItem<Part>> Filter(List<GroupItem<Part>> groupItems)
         {
@@ -181,7 +210,19 @@ namespace SmallTesting.XmlSerialize
     {
         public PartAttributeFilterObject()
         {
-            //Filter = FilterAttributes;
+            Name = "Part Attribute";
+        }
+        public string Attribute { get; set; }
+        public string Value { get; set; }
+
+        public override FilterObject<Part> Create()
+        {
+            return new PartAttributeFilterObject();
+        }
+
+        public override object GetViewModel()
+        {
+            return new PartAttributeFilterVm(this);
         }
     }
     public class PartPropertyFilterObject : FilterObject<Part>
@@ -234,6 +275,16 @@ namespace SmallTesting.XmlSerialize
             }
             return newGroupItems;
         }
+
+        public override object GetViewModel()
+        {
+            return new PartPropertyFilterVm(this);
+        }
+
+        public override FilterObject<Part> Create()
+        {
+            return new PartPropertyFilterObject();
+        }
     }
 
     public class PartGroupObject : GroupObject<Part>
@@ -241,6 +292,7 @@ namespace SmallTesting.XmlSerialize
         public PartGroupObject()
         {
             Name = "Part";
+
         }
 
         public override void Group(List<GroupItem<Part>> groupItems)
@@ -268,6 +320,16 @@ namespace SmallTesting.XmlSerialize
         {
             return base.Filter(groupItems);
         }
+
+        public override object GetViewModel()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override GroupObject<Part> Create()
+        {
+            return new PartGroupObject();
+        }
     }
 
     public class PartTypeGroupObject : GroupObject<Part>
@@ -277,6 +339,15 @@ namespace SmallTesting.XmlSerialize
             Name = "Part Type";
         }
 
+        public override GroupObject<Part> Create()
+        {
+            return new PartTypeGroupObject();
+        }
+
+        public override object GetViewModel()
+        {
+            return new GroupObjectViewModel { Description = "Group by part type." };
+        }
         public override void Group(List<GroupItem<Part>> groupItems)
         {
             foreach (var item in groupItems)
@@ -294,8 +365,105 @@ namespace SmallTesting.XmlSerialize
             Name = "Part Attribute";
             FilterObjects.Add(new PartAttributeFilterObject());
         }
+
+        public override GroupObject<Part> Create()
+        {
+            return new AttributeGroupObject();
+        }
+
+        public override object GetViewModel()
+        {
+            throw new NotImplementedException();
+        }
     }
 
-  
+    public class PartNameGroupObject : GroupObject<Part>
+    {
+        public PartNameGroupObject()
+        {
+            Name = "Part Name";
+        }
 
+        public override GroupObject<Part> Create()
+        {
+            return new PartNameGroupObject();
+        }
+
+        public override object GetViewModel()
+        {
+            return new GroupObjectViewModel { Description = "Group by part name." };
+        }
+
+        public override void Group(List<GroupItem<Part>> groupItems)
+        {
+            groupItems.ForEach(x => x.GroupNames.Add(x.Item.Name));
+        }
+    }
+
+
+    public class GroupObjectViewModel
+    {
+        public string Description { get; set; }
+    }
+
+    public class PartFilterGroupObject : GroupObject<Part>
+    {
+        public PartFilterGroupObject()
+        {
+            Name = "Part Filter";
+        }
+        public override GroupObject<Part> Create()
+        {
+            return new PartTypeGroupObject();
+        }
+
+        public override object GetViewModel()
+        {
+            return new GroupObjectViewModel { Description = "Group by a part filter." };
+        }
+    }
+
+    public class PartPropertyFilterVm : BaseViewModel
+    {
+        private string _selectedPropertyName;
+
+        public PartPropertyFilterVm(PartPropertyFilterObject filterObject)
+        {
+            FilterObject = filterObject;
+            PropertyNames = FilterObject.PropertyNames;
+
+        }
+        public List<string> PropertyNames { get; set; }
+        public string SelectedPropertyName { get => _selectedPropertyName; set { PropertySelected(); _selectedPropertyName = value; } }
+        public string Value { get; set; }
+
+        public PartPropertyFilterObject FilterObject { get; set; }
+
+        void PropertySelected()
+        {
+            FilterObject.PropertyName = SelectedPropertyName;
+        }
+    }
+
+    public class PartAttributeFilterVm : BaseViewModel
+    {
+        private string _value;
+        private string _attribute;
+
+        public PartAttributeFilterVm(PartAttributeFilterObject filterObject)
+        {
+            FilterObject = filterObject;
+        }
+
+        public List<string> PropertyNames { get; set; }
+        public string Value { get => _value; set { _value = value; FilterObject.Value = value; } }
+        public string Attribute { get => _attribute; set { _attribute = value; FilterObject.Attribute = value; } }
+
+        public PartAttributeFilterObject FilterObject { get; set; }
+
+
+    }
 }
+
+
+

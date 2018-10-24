@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Prism, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.7.1.0.431\lib\net45\Prism.dll</HintPath>
+    </Reference>
     <Reference Include="PropertyChanged, Version=2.2.4.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\packages\PropertyChanged.Fody.2.2.4.0\lib\net452\PropertyChanged.dll</HintPath>
     </Reference>
@@ -72,6 +75,11 @@
     </Compile>
     <Compile Include="MainWindowVm.cs" />
     <Compile Include="ListTesting\GroupTestVm.cs" />
+    <Compile Include="RegionEvents\RegionEventView.xaml.cs">
+      <DependentUpon>RegionEventView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RegionEvents\RegionEventViewModel.cs" />
+    <Compile Include="RegionEvents\ViewModelBase.cs" />
     <Compile Include="WpfTesting\ClickToEditView.xaml.cs">
       <DependentUpon>ClickToEditView.xaml</DependentUpon>
     </Compile>
@@ -102,6 +110,10 @@
       <DependentUpon>SerializeTestView.xaml</DependentUpon>
     </Compile>
     <Page Include="ListTesting\GroupTestView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RegionEvents\RegionEventView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

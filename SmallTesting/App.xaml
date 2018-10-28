@@ -5,8 +5,12 @@
              xmlns:wpfTest="clr-namespace:SmallTesting.WpfTesting"
              xmlns:listTest="clr-namespace:SmallTesting.ListTesting"
              xmlns:serializeTest="clr-namespace:SmallTesting.XmlSerialize"
+             xmlns:equality="clr-namespace:SmallTesting.EqualityTesting"
              StartupUri="Startup.xaml">
     <Application.Resources>
+        <DataTemplate DataType="{x:Type equality:EqualityTestingVm}">
+            <equality:EqualityTestingView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type serializeTest:PartAttributeFilterVm}">
             <serializeTest:PartAttributeFilterView/>
         </DataTemplate>

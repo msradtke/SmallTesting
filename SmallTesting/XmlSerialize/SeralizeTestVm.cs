@@ -200,7 +200,7 @@ namespace SmallTesting.XmlSerialize
         public abstract object GetViewModel();
         public abstract FilterObject<T> Create();
         public string Name { get; set; }
-        public virtual List<GroupItem<Part>> Filter(List<GroupItem<Part>> groupItems)
+        public virtual List<GroupItem<T>> Filter(List<GroupItem<T>> groupItems)
         {
             return null;
         }

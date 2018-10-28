@@ -11,7 +11,8 @@ namespace SmallTesting.RegionEvents
     {
         public RegionEventViewModel()
         {
-
+            //PublishEventToRegion<DocumentOpenedEvent>().(message);
+            //GetRegionEvent<DocumentOpenedEvent>().Publish(message);
         }
     }
 

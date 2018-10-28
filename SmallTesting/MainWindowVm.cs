@@ -1,4 +1,5 @@
-﻿using SmallTesting.ListTesting;
+﻿using SmallTesting.EqualityTesting;
+using SmallTesting.ListTesting;
 using SmallTesting.WpfTesting;
 using SmallTesting.XmlSerialize;
 using System;
@@ -13,7 +14,7 @@ namespace SmallTesting
     {
         public MainWindowVm()
         {
-            CurrentViewModel = new SeralizeTestVm();
+            CurrentViewModel = new EqualityTestingVm();
         }
         public object CurrentViewModel { get; set; }
     }

@@ -14,7 +14,7 @@ namespace SmallTesting
     {
         public MainWindowVm()
         {
-            CurrentViewModel = new EqualityTestingVm();
+            CurrentViewModel = new SeralizeTestVm();
         }
         public object CurrentViewModel { get; set; }
     }

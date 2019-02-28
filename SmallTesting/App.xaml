@@ -8,6 +8,9 @@
              xmlns:equality="clr-namespace:SmallTesting.EqualityTesting"
              StartupUri="Startup.xaml">
     <Application.Resources>
+        <DataTemplate DataType="{x:Type local:BaseViewModel}">
+            <local:BaseView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type equality:EqualityTestingVm}">
             <equality:EqualityTestingView/>
         </DataTemplate>

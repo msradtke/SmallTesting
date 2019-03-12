@@ -20,8 +20,8 @@ namespace SmallTesting.EqualityTesting
             Pattern1.PatternItems.Add(new PatternItem { Item = item1, Pattern = Pattern1 });
             Pattern2.PatternItems.Add(new PatternItem { Item = item2, Pattern = Pattern2 });
 
-            Equal = item1.Equals(item2);
-            EqualsOperator = item1 == item2;
+            Equal = Pattern1.Equals(Pattern2);
+            EqualsOperator = Pattern1 == Pattern2;
 
         }
 
@@ -33,13 +33,20 @@ namespace SmallTesting.EqualityTesting
 
     }
 
-    public class Pattern
+    public class Pattern : IEquatable<Pattern>
     {
         public Pattern()
         {
             PatternItems = new List<PatternItem>();
         }
         public List<PatternItem> PatternItems { get; set; }
+
+        public bool Equals(Pattern other)
+        {
+            if (PatternItems.SequenceEqual(other.PatternItems))
+                return true;
+            return false;
+        }
     }
     public class Item : IEquatable<Item>
     {
@@ -70,7 +77,7 @@ namespace SmallTesting.EqualityTesting
         public Pattern Pattern { get; set; }
         public int Demand { get; set; }
     }
-    public class PatternItem
+    public class PatternItem : IEquatable<PatternItem>
     {
         public PatternItem()
         {
@@ -80,6 +87,14 @@ namespace SmallTesting.EqualityTesting
         public Item Item { get; set; }
         public Pattern Pattern { get; set; }
 
+        public bool Equals(PatternItem other)
+        {
+            return Item.Equals(other.Item);
+        }
+        public override bool Equals(object other)
+        {
+            return (other is PatternItem) && Item.Equals((other as PatternItem).Item) && Pattern.Equals((other as PatternItem).Pattern);
+        }
     }
     public enum Orientation
     {

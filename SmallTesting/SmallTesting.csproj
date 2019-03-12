@@ -72,6 +72,10 @@
       <DependentUpon>EqualityTestingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="EqualityTesting\EqualityTestingVm.cs" />
+    <Compile Include="Expressions\ExpressionsTestView.xaml.cs">
+      <DependentUpon>ExpressionsTestView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Expressions\ExpressionsTestVm.cs" />
     <Compile Include="ListTesting\GroupTestView.xaml.cs">
       <DependentUpon>GroupTestView.xaml</DependentUpon>
     </Compile>
@@ -115,6 +119,10 @@
       <DependentUpon>SerializeTestView.xaml</DependentUpon>
     </Compile>
     <Page Include="EqualityTesting\EqualityTestingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Expressions\ExpressionsTestView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -6,8 +6,12 @@
              xmlns:listTest="clr-namespace:SmallTesting.ListTesting"
              xmlns:serializeTest="clr-namespace:SmallTesting.XmlSerialize"
              xmlns:equality="clr-namespace:SmallTesting.EqualityTesting"
+             xmlns:expressions="clr-namespace:SmallTesting.Expressions"
              StartupUri="Startup.xaml">
     <Application.Resources>
+        <DataTemplate DataType="{x:Type expressions:ExpressionsTestVm}">
+            <expressions:ExpressionsTestView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type equality:EqualityTestingVm}">
             <equality:EqualityTestingView/>
         </DataTemplate>

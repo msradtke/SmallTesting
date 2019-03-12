@@ -142,6 +142,7 @@ namespace SmallTesting.XmlSerialize
         //public List<GroupItem<T>> GroupItems { get; set; }
 
         public abstract object GetViewModel();
+
         public abstract GroupObject<T> Create();
 
         public int Id { get; set; }
@@ -450,6 +451,10 @@ namespace SmallTesting.XmlSerialize
         private string _value;
         private string _attribute;
 
+        public PartAttributeFilterVm()
+        {
+
+        }
         public PartAttributeFilterVm(PartAttributeFilterObject filterObject)
         {
             FilterObject = filterObject;

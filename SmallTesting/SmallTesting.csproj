@@ -67,6 +67,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ActionCommand.cs" />
+    <Compile Include="BaseView.xaml.cs">
+      <DependentUpon>BaseView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="EqualityTesting\EqualityTestingView.xaml.cs">
       <DependentUpon>EqualityTestingView.xaml</DependentUpon>
@@ -88,6 +91,7 @@
       <DependentUpon>RegionEventView.xaml</DependentUpon>
     </Compile>
     <Compile Include="RegionEvents\RegionEventViewModel.cs" />
+    <Compile Include="RegionEvents\RegionPubSubEvent.cs" />
     <Compile Include="RegionEvents\ViewModelBase.cs" />
     <Compile Include="WpfTesting\ClickToEditView.xaml.cs">
       <DependentUpon>ClickToEditView.xaml</DependentUpon>
@@ -118,6 +122,10 @@
     <Compile Include="XmlSerialize\SerializeTestView.xaml.cs">
       <DependentUpon>SerializeTestView.xaml</DependentUpon>
     </Compile>
+    <Page Include="BaseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EqualityTesting\EqualityTestingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

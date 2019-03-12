@@ -47,19 +47,36 @@ namespace SmallTesting.RegionEvents
             }
             return _descriptionIsSet;
         }
-        protected T GetRegionEvent<T>() where T : EventBase, new()
+        protected T GetRegionEvent<T>() where T : RegionPubSubEvent<T>, new()
         {
-            return EventAggregator.GetEvent<T>();
-        }
+            var regionPayload = new RegionEventPayload<T>();
+            regionPayload.PublishIds = PublishRegionIds;
 
+            var regionEvent = new T();
+            regionPayload.PayLoad = regionPayload;
+
+            return regionEvent;
+            //return EventAggregator.GetEvent<T>();
+        }
+        /*
         public class RegionPubSubEvent<T, TPayload> : PubSubEvent<T> where T: RegionEventPayload<TPayload>
         {
             RegionEventPayload<TPayload> EventCreatePayload(TPayload payload)
             {
                 return new RegionEventPayload<TPayload>() { PayLoad = payload };
             }
-        }
+        }*/
 
+        protected void Publish<TEventType>(object payload) where TEventType : RegionPubSubEvent<object>, new()
+        {
+            var regionPayload = new RegionEventPayload<object> ();
+            regionPayload.PublishIds = PublishRegionIds;
+
+            var regionEvent = new TEventType();
+            regionPayload.PayLoad = regionPayload;
+          
+            EventAggregator.GetEvent<TEventType>().Publish(regionPayload);
+        }
 
         protected void PublishEventToRegion<TEventType, TPayload>(TPayload payload) 
             where TEventType : PubSubEvent<RegionEventPayload<TPayload>>, new()

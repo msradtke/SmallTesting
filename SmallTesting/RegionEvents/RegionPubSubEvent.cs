@@ -20,4 +20,8 @@ namespace SmallTesting.RegionEvents
         public List<Guid> PublishIds { get; set; }
 
     }
+    public interface IRegionPubSubEvent
+    {
+
+    }
 }

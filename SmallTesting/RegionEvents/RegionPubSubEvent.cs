@@ -7,21 +7,29 @@ using System.Threading.Tasks;
 
 namespace SmallTesting.RegionEvents
 {
-    public class RegionPubSubEvent<TPayload> : PubSubEvent<TPayload>
+    public class RegionPubSubEvent<TPayload> : RegionPubSubEvent
     {
-  
-        public override void Publish(TPayload payload)
+        PubSubEvent<RegionEventPayload<TPayload>> pubSubEvent;
+        public RegionPubSubEvent()
+        {
+            pubSubEvent = new PubSubEvent<RegionEventPayload<TPayload>>();
+        }
+        public void Publish(TPayload payload)
         {
             var regionPayload = new RegionEventPayload<TPayload>();
             regionPayload.PublishIds = PublishIds;
-
-            base.Publish(payload);
+            regionPayload.Sender = Sender;
+            pubSubEvent.Publish(regionPayload);
         }
-        public List<Guid> PublishIds { get; set; }
 
     }
     public interface IRegionPubSubEvent
     {
-
+        List<Guid> PublishIds { get; set; }
+    }
+    public class RegionPubSubEvent : EventBase
+    {
+        public List<Guid> PublishIds { get; set; }
+        public ViewModelBase Sender { get; set; }
     }
 }

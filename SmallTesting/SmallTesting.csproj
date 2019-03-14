@@ -87,12 +87,14 @@
     </Compile>
     <Compile Include="MainWindowVm.cs" />
     <Compile Include="ListTesting\GroupTestVm.cs" />
+    <Compile Include="RegionEvents\ChildRegionViewModel.cs" />
     <Compile Include="RegionEvents\RegionEventView.xaml.cs">
       <DependentUpon>RegionEventView.xaml</DependentUpon>
     </Compile>
     <Compile Include="RegionEvents\RegionEventViewModel.cs" />
     <Compile Include="RegionEvents\RegionPubSubEvent.cs" />
     <Compile Include="RegionEvents\ViewModelBase.cs" />
+    <Compile Include="RegionEvents\ViewModelWire.cs" />
     <Compile Include="WpfTesting\ClickToEditView.xaml.cs">
       <DependentUpon>ClickToEditView.xaml</DependentUpon>
     </Compile>

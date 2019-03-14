@@ -13,16 +13,20 @@ namespace SmallTesting.RegionEvents
         {
             //PublishEventToRegion<DocumentOpenedEvent>().(message);
             GetRegionEvent<DocumentOpenedEvent>().Publish("test");
+            ChildViewModel = new ChildRegionViewModel();
+
         }
+        public ChildRegionViewModel ChildViewModel { get; set; }
+
     }
     
     public class RegionEventPayload<T>
     {
         public RegionEventPayload()
         {
-            PublishIds = new List<Guid>();
+            ViewModelRegions = new List<ViewModelRegion>();
         }
-        public List<Guid> PublishIds { get; set; }
+        public List<ViewModelRegion> ViewModelRegions { get; set; }
         public T PayLoad { get; set; }
         public ViewModelBase Sender { get; set; }
     }

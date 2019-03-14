@@ -13,8 +13,7 @@ namespace SmallTesting.RegionEvents
         List<object> _handlers; //keep reference to handlers alive
         public ViewModelBase()
         {
-            ListenRegionIds = new List<Guid>();
-            PublishRegionIds = new List<Guid>();
+            Wire = new ViewModelWire(this);
             _handlers = new List<object>();
             ChildViewModels = new List<IViewModelBase>();
         }
@@ -47,10 +46,21 @@ namespace SmallTesting.RegionEvents
             }
             return _descriptionIsSet;
         }
-        protected TEventType GetRegionEvent<TEventType>() where TEventType : RegionPubSubEvent, new()
+        protected TEventType GetRegionEvent<TEventType>(ViewModelRegion viewModelRegion = null) where TEventType : RegionPubSubEvent, new()
         {
-            var regionEvent = EventAggregator.GetEvent<TEventType>(); ;
-            regionEvent.PublishIds = PublishRegionIds;
+            if (viewModelRegion != null)
+                return GetRegionEvent<TEventType>(new List<ViewModelRegion> { viewModelRegion });
+
+            var regionEvent = EventAggregator.GetEvent<TEventType>();
+            regionEvent.ViewModelRegions = Wire.;0
+            regionEvent.Sender = this;
+            return regionEvent;
+            //return EventAggregator.GetEvent<T>();
+        }
+        protected TEventType GetRegionEvent<TEventType>(List<ViewModelRegion> ViewModelRegions) where TEventType : RegionPubSubEvent, new()
+        {
+            var regionEvent = EventAggregator.GetEvent<TEventType>();
+            regionEvent.ViewModelRegions = ViewModelRegions;
             regionEvent.Sender = this;
             return regionEvent;
             //return EventAggregator.GetEvent<T>();
@@ -63,17 +73,7 @@ namespace SmallTesting.RegionEvents
                 return new RegionEventPayload<TPayload>() { PayLoad = payload };
             }
         }*/
-        protected void PublishEventToRegion<TEventType, TPayload>(TPayload payload) 
-            where TEventType : PubSubEvent<RegionEventPayload<TPayload>>, new()
-        {
-            var regionPayload = new RegionEventPayload<TPayload>
-            {
-                PublishIds = PublishRegionIds,
-                PayLoad = payload
-            };
-            var test = EventAggregator.GetEvent<TEventType>();
-            EventAggregator.GetEvent<TEventType>().Publish(regionPayload);
-        }
+
         protected void SubscribeRegion<TEventType, TPayload>(Action<TPayload> handler) 
             where TEventType : PubSubEvent<RegionEventPayload<TPayload>>, new()
         {
@@ -136,6 +136,10 @@ namespace SmallTesting.RegionEvents
 
         public virtual void Initialize() { }
 
+
+
+        public ViewModelWire Wire { get; set; }
+        public ViewModelRegion Region { get; set; }
     }
 
     public interface IViewModelBase

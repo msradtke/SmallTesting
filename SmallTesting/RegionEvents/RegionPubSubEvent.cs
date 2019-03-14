@@ -9,19 +9,33 @@ namespace SmallTesting.RegionEvents
 {
     public class RegionPubSubEvent<TPayload> : RegionPubSubEvent
     {
-        PubSubEvent<RegionEventPayload<TPayload>> pubSubEvent;
+        PubSubEvent<RegionEventPayload<TPayload>> publishEvent;
+        PubSubEvent<TPayload> subEvent;
         public RegionPubSubEvent()
         {
-            pubSubEvent = new PubSubEvent<RegionEventPayload<TPayload>>();
+            publishEvent = new PubSubEvent<RegionEventPayload<TPayload>>();
         }
         public void Publish(TPayload payload)
         {
-            var regionPayload = new RegionEventPayload<TPayload>();
-            regionPayload.PublishIds = PublishIds;
-            regionPayload.Sender = Sender;
-            pubSubEvent.Publish(regionPayload);
+            var regionPayload = GetRegionEventPayload(payload);
+            publishEvent.Publish(regionPayload);
         }
+        public SubscriptionToken Subscribe(Action<TPayload> action)
+        {
+            return subEvent.Subscribe(action);
+        }
+        public SubscriptionToken Subscribe(Action<TPayload> action, bool keepSubscriberReferenceAlive);
+        public SubscriptionToken Subscribe(Action<TPayload> action, ThreadOption threadOption, bool keepSubscriberReferenceAlive);
+        public virtual SubscriptionToken Subscribe(Action<TPayload> action, ThreadOption threadOption, bool keepSubscriberReferenceAlive, Predicate<TPayload> filter);
 
+        RegionEventPayload<TPayload> GetRegionEventPayload(TPayload payload)
+        {
+            var regionPayload = new RegionEventPayload<TPayload>();
+            regionPayload.ViewModelRegions = ViewModelRegions;
+            regionPayload.Sender = Sender;
+            regionPayload.PayLoad = payload;
+            return regionPayload;
+        }
     }
     public interface IRegionPubSubEvent
     {
@@ -29,7 +43,7 @@ namespace SmallTesting.RegionEvents
     }
     public class RegionPubSubEvent : EventBase
     {
-        public List<Guid> PublishIds { get; set; }
+        public List<ViewModelRegion> ViewModelRegions { get; set; }
         public ViewModelBase Sender { get; set; }
     }
 }

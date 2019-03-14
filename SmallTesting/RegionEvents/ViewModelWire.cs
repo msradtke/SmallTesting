@@ -9,30 +9,32 @@ namespace SmallTesting.RegionEvents
     public class ViewModelWire
     {
         public ViewModelWire(ViewModelBase parent)
-        {
-            
-            DefaultViewModelRegion = new ViewModelRegion();
-
+        {            
+            ChildViewModelRegion = new ViewModelRegion();
+        }
+        public void RegisterChild(ViewModelBase child)
+        {            
+            child.ListenRegions.Add(ChildViewModelRegion);
+            child.PublishRegions.Add(ChildViewModelRegion);
+            Cleanup += ()=> child.Cleanup();
         }
 
-        public void RegisterChild(ViewModelBase child, ViewModelRegion viewModelRegion = null)
-        {
-            if (viewModelRegion == null)
-                viewModelRegion = DefaultViewModelRegion;
-            child.Region = viewModelRegion;
-
-        }
-
-        public ViewModelRegion DefaultViewModelRegion { get; private set; }
+        public Action Cleanup { get; set; }
+        public List<Action> CleanupActions { get; private set; }
+        public ViewModelRegion ChildViewModelRegion { get; private set; }
     }
 
     public class ViewModelRegion
     {
         static ViewModelRegion()
-        {
+        {            
             GlobalRegion = new ViewModelRegion();
         }
+        public ViewModelRegion()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
         public static readonly ViewModelRegion GlobalRegion;
-
+        public string Id { get; set; }
     }
 }

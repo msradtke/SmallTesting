@@ -7,8 +7,15 @@
              xmlns:serializeTest="clr-namespace:SmallTesting.XmlSerialize"
              xmlns:equality="clr-namespace:SmallTesting.EqualityTesting"
              xmlns:expressions="clr-namespace:SmallTesting.Expressions"
+             xmlns:region="clr-namespace:SmallTesting.RegionEvents"
              StartupUri="Startup.xaml">
     <Application.Resources>
+        <DataTemplate DataType="{x:Type region:ChildRegionViewModel}">
+            <region:ChildRegionView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type region:RegionEventViewModel}">
+            <region:RegionEventView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type expressions:ExpressionsTestVm}">
             <expressions:ExpressionsTestView/>
         </DataTemplate>

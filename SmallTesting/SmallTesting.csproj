@@ -87,6 +87,9 @@
     </Compile>
     <Compile Include="MainWindowVm.cs" />
     <Compile Include="ListTesting\GroupTestVm.cs" />
+    <Compile Include="RegionEvents\ChildRegionView.xaml.cs">
+      <DependentUpon>ChildRegionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RegionEvents\ChildRegionViewModel.cs" />
     <Compile Include="RegionEvents\RegionEventView.xaml.cs">
       <DependentUpon>RegionEventView.xaml</DependentUpon>
@@ -137,6 +140,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ListTesting\GroupTestView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RegionEvents\ChildRegionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

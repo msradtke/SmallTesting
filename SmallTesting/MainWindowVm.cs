@@ -1,6 +1,8 @@
-﻿using SmallTesting.EqualityTesting;
+﻿using Prism.Events;
+using SmallTesting.EqualityTesting;
 using SmallTesting.Expressions;
 using SmallTesting.ListTesting;
+using SmallTesting.RegionEvents;
 using SmallTesting.WpfTesting;
 using SmallTesting.XmlSerialize;
 using System;
@@ -15,7 +17,8 @@ namespace SmallTesting
     {
         public MainWindowVm()
         {
-            CurrentViewModel = new ExpressionsTestVm();
+            IEventAggregator eg = new EventAggregator();
+            CurrentViewModel = new RegionEventViewModel(eg);
         }
         public object CurrentViewModel { get; set; }
     }

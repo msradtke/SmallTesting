@@ -9,24 +9,24 @@ namespace SmallTesting.RegionEvents
 {
     public class RegionPubSubEvent<TPayload> : RegionPubSubEvent
     {
-        PubSubEvent<RegionEventPayload<TPayload>> publishEvent;
-        PubSubEvent<TPayload> subEvent;
+        PubSubEvent<RegionEventPayload<TPayload>> pubSubEvent;
         public RegionPubSubEvent()
         {
-            publishEvent = new PubSubEvent<RegionEventPayload<TPayload>>();
+            pubSubEvent = new PubSubEvent<RegionEventPayload<TPayload>>();
         }
         public void Publish(TPayload payload)
         {
             var regionPayload = GetRegionEventPayload(payload);
-            publishEvent.Publish(regionPayload);
+            pubSubEvent.Publish(regionPayload);
         }
         public SubscriptionToken Subscribe(Action<TPayload> action)
         {
-            return subEvent.Subscribe(action);
+
+            Action<RegionEventPayload<TPayload>> regionEventPayload = x => action(x.PayLoad);
+            var token = pubSubEvent.Subscribe(regionEventPayload, ThreadOption.PublisherThread, false, Sender.ShouldListen);
+            Sender.Wire.Cleanup += () => pubSubEvent.Unsubscribe(token);
+            return token;
         }
-        public SubscriptionToken Subscribe(Action<TPayload> action, bool keepSubscriberReferenceAlive);
-        public SubscriptionToken Subscribe(Action<TPayload> action, ThreadOption threadOption, bool keepSubscriberReferenceAlive);
-        public virtual SubscriptionToken Subscribe(Action<TPayload> action, ThreadOption threadOption, bool keepSubscriberReferenceAlive, Predicate<TPayload> filter);
 
         RegionEventPayload<TPayload> GetRegionEventPayload(TPayload payload)
         {

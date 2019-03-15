@@ -50,14 +50,14 @@ namespace SmallTesting.RegionEvents
 
             var regionEvent = EventAggregator.GetEvent<TEventType>();
             regionEvent.Sender = this;
-            regionEvent.ViewModelRegions = PublishRegions;
+            regionEvent.PublishRegions = PublishRegions;
             return regionEvent;
             //return EventAggregator.GetEvent<T>();
         }
         protected TEventType GetRegionEvent<TEventType>(List<ViewModelRegion> ViewModelRegions) where TEventType : RegionPubSubEvent, new()
         {
             var regionEvent = EventAggregator.GetEvent<TEventType>();
-            regionEvent.ViewModelRegions = ViewModelRegions;
+            regionEvent.PublishRegions = ViewModelRegions;
             regionEvent.Sender = this;
             return regionEvent;
             //return EventAggregator.GetEvent<T>();

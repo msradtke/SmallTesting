@@ -10,6 +10,9 @@
              xmlns:region="clr-namespace:SmallTesting.RegionEvents"
              StartupUri="Startup.xaml">
     <Application.Resources>
+        <DataTemplate DataType="{x:Type region:GrandChildRegionViewModel}">
+            <region:GrandChildRegionView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type region:ChildRegionViewModel}">
             <region:ChildRegionView/>
         </DataTemplate>

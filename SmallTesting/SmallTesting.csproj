@@ -91,11 +91,16 @@
       <DependentUpon>ChildRegionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="RegionEvents\ChildRegionViewModel.cs" />
+    <Compile Include="RegionEvents\GrandChildRegionView.xaml.cs">
+      <DependentUpon>GrandChildRegionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RegionEvents\GrandChildRegionViewModel.cs" />
     <Compile Include="RegionEvents\RegionEventView.xaml.cs">
       <DependentUpon>RegionEventView.xaml</DependentUpon>
     </Compile>
     <Compile Include="RegionEvents\RegionEventViewModel.cs" />
     <Compile Include="RegionEvents\RegionPubSubEvent.cs" />
+    <Compile Include="RegionEvents\SisterRegionViewModel.cs" />
     <Compile Include="RegionEvents\ViewModelBase.cs" />
     <Compile Include="RegionEvents\ViewModelWire.cs" />
     <Compile Include="WpfTesting\ClickToEditView.xaml.cs">
@@ -144,6 +149,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RegionEvents\ChildRegionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RegionEvents\GrandChildRegionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

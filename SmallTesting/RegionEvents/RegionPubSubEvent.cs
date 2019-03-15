@@ -10,6 +10,7 @@ namespace SmallTesting.RegionEvents
     public class RegionPubSubEvent<TPayload> : RegionPubSubEvent
     {
         PubSubEvent<RegionEventPayload<TPayload>> pubSubEvent;
+        Action<RegionEventPayload<TPayload>> regionEventPayload;
         public RegionPubSubEvent()
         {
             pubSubEvent = new PubSubEvent<RegionEventPayload<TPayload>>();
@@ -21,9 +22,8 @@ namespace SmallTesting.RegionEvents
         }
         public SubscriptionToken Subscribe(Action<TPayload> action)
         {
-
-            Action<RegionEventPayload<TPayload>> regionEventPayload = x => action(x.PayLoad);
-            var token = pubSubEvent.Subscribe(regionEventPayload, ThreadOption.PublisherThread, false, Sender.ShouldListen);
+            regionEventPayload = x => action(x.PayLoad);
+            var token = pubSubEvent.Subscribe(regionEventPayload, ThreadOption.PublisherThread, true, Sender.ShouldListen);
             Sender.Wire.Cleanup += () => pubSubEvent.Unsubscribe(token);
             return token;
         }
@@ -31,7 +31,7 @@ namespace SmallTesting.RegionEvents
         RegionEventPayload<TPayload> GetRegionEventPayload(TPayload payload)
         {
             var regionPayload = new RegionEventPayload<TPayload>();
-            regionPayload.ViewModelRegions = ViewModelRegions;
+            regionPayload.ViewModelRegions = PublishRegions;
             regionPayload.Sender = Sender;
             regionPayload.PayLoad = payload;
             return regionPayload;
@@ -43,7 +43,7 @@ namespace SmallTesting.RegionEvents
     }
     public class RegionPubSubEvent : EventBase
     {
-        public List<ViewModelRegion> ViewModelRegions { get; set; }
+        public List<ViewModelRegion> PublishRegions { get; set; }
         public ViewModelBase Sender { get; set; }
     }
 }

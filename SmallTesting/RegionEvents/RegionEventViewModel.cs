@@ -13,24 +13,32 @@ namespace SmallTesting.RegionEvents
         {
             EventAggregator = eventAggregator;
             //PublishEventToRegion<DocumentOpenedEvent>().(message);
-            
+
             ChildViewModel = new ChildRegionViewModel(EventAggregator);
             Wire.RegisterChild(ChildViewModel);
+            ChildSisterViewModel = new SisterRegionViewModel(EventAggregator);
+            Wire.RegisterChild(ChildSisterViewModel);
 
-            var test = GetRegionEvent<DocumentOpenedEvent>().Subscribe(DocOpened);
+            GetRegionEvent<DocumentOpenedEvent>().Subscribe(DocOpened);
+            GetRegionEvent<FakeEvent>().Subscribe(Fake);
+        }
+
+        private void Fake(string obj)
+        {
+            Console.WriteLine("Should NOT listen " + obj);
         }
 
         private void DocOpened(string obj)
         {
-            Console.WriteLine(obj);
+            Console.WriteLine("Should listen " + obj);
         }
 
         public ChildRegionViewModel ChildViewModel { get; set; }
+        public SisterRegionViewModel ChildSisterViewModel { get; set; }
 
 
-        
     }
-    
+
     public class RegionEventPayload<T>
     {
         public RegionEventPayload()
@@ -43,7 +51,7 @@ namespace SmallTesting.RegionEvents
     }
 
     public class DocumentOpenedEvent : RegionPubSubEvent<string> { }
-
+    public class FakeEvent : RegionPubSubEvent<string> { }
     public interface IRegionEventViewModelFactory
     {
         RegionEventViewModel CreateRegionEventViewModel();
